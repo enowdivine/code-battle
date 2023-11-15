@@ -1,9 +1,7 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
 import _ from "lodash";
 import User from "./user.model";
-import { welcomeEmail } from "./templates/emails";
 
 class UserController {
   async register(req: Request, res: Response) {

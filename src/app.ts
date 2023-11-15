@@ -31,6 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(`/api/${process.env.API_VERSION}/user`, userRoutes);
+app.use(`/api/${process.env.API_VERSION}/alarm`, userRoutes);
 
 // let socketID: any;
 // io.on("connection", async (socket: any) => {

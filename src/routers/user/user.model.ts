@@ -18,10 +18,6 @@ const user = new mongoose.Schema(
       type: Number,
       required: [true, "latitude is required"],
     },
-    status: {
-      type: String,
-      default: "active",
-    },
   },
   {
     timestamps: true,
