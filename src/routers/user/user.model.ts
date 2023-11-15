@@ -6,6 +6,10 @@ const user = new mongoose.Schema(
       type: String,
       required: [true, "phone number is required"],
     },
+    FCM_TOKEN: {
+      type: String,
+      required: [true, "FCM_TOKEN is required"],
+    },
     longitude: {
       type: Number,
       required: [true, "longitude is required"],

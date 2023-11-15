@@ -16,6 +16,7 @@ class UserController {
       }
       const newUser = new User({
         phone: req.body.phone,
+        FCM_TOKEN: req.body.fcm_token,
         longitude: req.body.longitude,
         latitude: req.body.latitude,
       });
@@ -53,6 +54,7 @@ class UserController {
       if (user) {
         const newUser = new User({
           phone: req.body.phone,
+          FCM_TOKEN: req.body.fcm_token,
           longitude: req.body.longitude,
           latitude: req.body.latitude,
         });
