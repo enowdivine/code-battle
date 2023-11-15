@@ -2,46 +2,9 @@ import mongoose from "mongoose";
 
 const user = new mongoose.Schema(
   {
-    username: {
+    phone: {
       type: String,
-      required: [true, "username is required"],
-    },
-    email: {
-      type: String,
-      required: [true, "user email is required"],
-      unique: true,
-    },
-    emailConfirmed: {
-      type: Boolean,
-      default: false,
-    },
-    password: {
-      type: String,
-      required: [true, "user pasword is required"],
-    },
-    bio: {
-      type: String,
-      default: "",
-    },
-    avatar: {
-      type: Object,
-      default: null,
-    },
-    country: {
-      type: String,
-      default: "",
-    },
-    purchasedCourses: {
-      type: Array,
-      default: [],
-    },
-    wishlist: {
-      type: Array,
-      default: [],
-    },
-    cart: {
-      type: Array,
-      default: [],
+      required: [true, "phone number is required"],
     },
     status: {
       type: String,

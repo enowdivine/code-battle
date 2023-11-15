@@ -8,17 +8,14 @@ import { welcomeEmail } from "./templates/emails";
 class UserController {
   async register(req: Request, res: Response) {
     try {
-      const user = await User.findOne({ email: req.body.email });
+      const user = await User.findOne({ phone: req.body.phone });
       if (user) {
         return res.status(409).json({
-          message: "email already exist",
+          message: "user already exist",
         });
       }
-      const hash = await bcrypt.hash(req.body.password, 10);
       const newUser = new User({
-        username: req.body.username,
-        email: req.body.email,
-        password: hash,
+        phone: req.body.phone,
       });
       newUser
         .save()
@@ -26,19 +23,19 @@ class UserController {
           const token: string = jwt.sign(
             {
               id: response._id,
-              username: response.username,
-              email: response.email,
+              phone: response.phone,
             },
             process.env.JWT_SECRET as string
           );
-          const url = `${process.env.SERVER_URL}/api/${process.env.API_VERSION}/user/verification/${token}`;
           res.status(201).json({
-            message: "success, check email",
-            token,
+            status: 1,
+            message: "success",
+            token: token,
           });
         })
         .catch((err) => {
           res.status(500).json({
+            status: 0,
             message: "error creating user",
             error: err,
           });
@@ -50,43 +47,23 @@ class UserController {
 
   async login(req: Request, res: Response) {
     try {
-      const user = await User.findOne({ email: req.body.email });
+      const user = await User.findOne({ phone: req.body.phone });
       if (user) {
-        if (user.emailConfirmed === false) {
-          return res.status(401).json({
-            message: "verify email to login",
-          });
-        }
-        bcrypt.compare(
-          req.body.password,
-          user.password!,
-          (err: any, result: any) => {
-            if (err) {
-              return res.status(401).json({
-                message: "authentication failed",
-              });
-            }
-            if (result) {
-              const token: string = jwt.sign(
-                {
-                  id: user._id,
-                  username: user.username,
-                  email: user.email,
-                },
-                process.env.JWT_SECRET as string
-              );
-              return res.status(200).json({
-                message: "login successful",
-                token: token,
-              });
-            }
-            res.status(401).json({
-              message: "authentication failed",
-            });
-          }
+        const token: string = jwt.sign(
+          {
+            id: user._id,
+            phone: user.phone,
+          },
+          process.env.JWT_SECRET as string
         );
+        return res.status(200).json({
+          status: 1,
+          message: "login successful",
+          token: token,
+        });
       } else {
         return res.status(401).json({
+          status: 0,
           message: "authentication failed",
         });
       }
@@ -103,11 +80,7 @@ class UserController {
       },
       {
         $set: {
-          username: req.body.username,
-          email: req.body.email,
-          bio: req.body.bio,
-          avatar: req.body.avatar,
-          country: req.body.country,
+          phone: req.body.phone,
         },
       }
     );
@@ -116,17 +89,18 @@ class UserController {
       const token: string = jwt.sign(
         {
           id: newuser?._id,
-          username: newuser?.username,
-          email: newuser?.email,
+          phone: newuser?.phone,
         },
         process.env.JWT_SECRET as string
       );
       res.status(200).json({
+        status: 1,
         message: "update successful",
         token: token,
       });
     } else {
       res.status(404).json({
+        status: 0,
         message: "user not found",
       });
     }
@@ -136,9 +110,7 @@ class UserController {
     try {
       const user = await User.findOne({ _id: req.params.id });
       if (user) {
-        return res.status(200).json({
-          user,
-        });
+        return res.status(200).json(user);
       } else {
         return res.status(404).json({
           message: "user not found",
@@ -153,9 +125,7 @@ class UserController {
     try {
       const users = await User.find().sort({ createdAt: -1 });
       if (users) {
-        return res.status(200).json({
-          users,
-        });
+        return res.status(200).json(users);
       } else {
         return res.status(404).json({
           message: "no user found",
