@@ -16,6 +16,8 @@ class UserController {
       }
       const newUser = new User({
         phone: req.body.phone,
+        longitude: req.body.longitude,
+        latitude: req.body.latitude,
       });
       newUser
         .save()
@@ -49,18 +51,34 @@ class UserController {
     try {
       const user = await User.findOne({ phone: req.body.phone });
       if (user) {
-        const token: string = jwt.sign(
-          {
-            id: user._id,
-            phone: user.phone,
-          },
-          process.env.JWT_SECRET as string
-        );
-        return res.status(200).json({
-          status: 1,
-          message: "login successful",
-          token: token,
+        const newUser = new User({
+          phone: req.body.phone,
+          longitude: req.body.longitude,
+          latitude: req.body.latitude,
         });
+        newUser
+          .save()
+          .then((response) => {
+            const token: string = jwt.sign(
+              {
+                id: response._id,
+                phone: response.phone,
+              },
+              process.env.JWT_SECRET as string
+            );
+            res.status(200).json({
+              status: 1,
+              message: "login successful",
+              token: token,
+            });
+          })
+          .catch((err) => {
+            res.status(500).json({
+              status: 0,
+              message: "error creating user",
+              error: err,
+            });
+          });
       } else {
         return res.status(401).json({
           status: 0,
@@ -81,6 +99,8 @@ class UserController {
       {
         $set: {
           phone: req.body.phone,
+          longitude: req.body.longitude,
+          latitude: req.body.latitude,
         },
       }
     );
