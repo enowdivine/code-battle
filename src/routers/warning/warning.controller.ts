@@ -20,7 +20,7 @@ class WarningController {
           user.latitude,
           user.longitude
         );
-        return distance <= 2; // Filter users within 2km radius
+        return distance <= 3; // Filter users within 3km radius
       });
 
       if (ALERT === "FIRE") {

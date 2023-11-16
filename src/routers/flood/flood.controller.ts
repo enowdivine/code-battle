@@ -24,7 +24,7 @@ class FloodController {
             user.latitude,
             user.longitude
           );
-          return distance <= 2; // Filter users within 2km radius
+          return distance <= 3; // Filter users within 3km radius
         });
         usersWithin3km.map((user) => sendNotification(user, data));
         res.status(200).json({
