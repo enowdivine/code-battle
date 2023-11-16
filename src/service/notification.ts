@@ -58,7 +58,7 @@ async function sendNotification(user: any, details: any) {
       // const responseData = { android: { result: result } };
       const result = await (await response).data;
       const responseData = { android: { result: result } };
-      console.log(responseData);
+
       return responseData;
     } catch (error: any) {
       console.error(error);
