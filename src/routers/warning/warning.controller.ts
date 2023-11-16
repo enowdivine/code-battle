@@ -63,6 +63,8 @@ class WarningController {
           category: "CRITICAL",
           status: "ACTIVE",
           image: "",
+          longitude: req.body.longitude,
+          latitude: req.body.latitude,
         };
         const newAlert = new Warning({
           title: data.title,
@@ -90,6 +92,8 @@ class WarningController {
           category: "CRITICAL",
           status: "ACTIVE",
           image: "",
+          longitude: req.body.longitude,
+          latitude: req.body.latitude,
         };
         const newAlert = new Warning({
           title: data.title,
@@ -117,6 +121,8 @@ class WarningController {
           category: "CRITICAL",
           status: "ACTIVE",
           image: "",
+          longitude: req.body.longitude,
+          latitude: req.body.latitude,
         };
         const newAlert = new Warning({
           title: data.title,
@@ -144,6 +150,8 @@ class WarningController {
           category: "CRITICAL",
           status: "ACTIVE",
           image: "",
+          longitude: req.body.longitude,
+          latitude: req.body.latitude,
         };
         const newAlert = new Warning({
           title: data.title,
@@ -171,6 +179,8 @@ class WarningController {
           category: "CRITICAL",
           status: "ACTIVE",
           image: "",
+          longitude: req.body.longitude,
+          latitude: req.body.latitude,
         };
         const newAlert = new Warning({
           title: data.title,
