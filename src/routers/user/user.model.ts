@@ -5,6 +5,7 @@ const user = new mongoose.Schema(
     phone: {
       type: String,
       required: [true, "phone number is required"],
+      unique: true,
     },
     FCM_TOKEN: {
       type: String,
