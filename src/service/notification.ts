@@ -1,3 +1,4 @@
+import axios from "axios";
 async function sendNotification(user: any, details: any) {
   const serverKey =
     "AAAAChQoeV4:APA91bE4jFNfAKnNLn2ckr08zDVRxY5iCoiI_ntp7Jo5Y-fQO6Rc9V2-5GvQml-E1coo_cwHT91MUo5aVclsTIxPuDU2O9JncES8NE0a9lznx5faHYAIXV0B_NL_TqissHSqjwvTFPOp"; // Replace with your FCM server key
@@ -33,19 +34,31 @@ async function sendNotification(user: any, details: any) {
     };
 
     try {
-      const response = await fetch("https://fcm.googleapis.com/fcm/send", {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(fields),
-      });
+      const response = axios.post(
+        "https://fcm.googleapis.com/fcm/send",
+        fields,
+        {
+          headers: headers,
+        }
+      );
+      // const response = await fetch("https://fcm.googleapis.com/fcm/send", {
+      //   method: "POST",
+      //   headers: headers,
+      //   body: JSON.stringify(fields),
+      // });
 
-      if (!response.ok) {
-        throw new Error("FCM Send Error: " + response.statusText);
+      // if (!response.ok) {
+      //   throw new Error("FCM Send Error: " + response.statusText);
+      // }
+      if (!response) {
+        throw new Error("FCM Send Error: " + response);
       }
 
-      const result = await response.json();
+      // const result = await response.json();
+      // const responseData = { android: { result: result } };
+      const result = await (await response).data;
       const responseData = { android: { result: result } };
-
+      console.log(responseData);
       return responseData;
     } catch (error: any) {
       console.error(error);
