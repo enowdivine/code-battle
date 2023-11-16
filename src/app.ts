@@ -56,7 +56,6 @@ setInterval(async function () {
   );
   if (response) {
     const data = { value: response.data.main.sea_level };
-    console.log(data);
     const res = axios.post(
       "https://code-battle-4dabfab863b2.herokuapp.com/api/v1/flood/add-data",
       data,
@@ -66,10 +65,9 @@ setInterval(async function () {
         },
       }
     );
-    console.log("resrrrrrrrrrrrr", res);
     return;
   }
-}, 5000); // every 30 minutes
+}, 1800000); // every 30 minutes
 
 const PORT: any = process.env.PORT || 5000;
 server.listen(PORT, () => {
