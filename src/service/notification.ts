@@ -1,5 +1,6 @@
 async function sendNotification(user: any, details: any) {
-  const serverKey = "YOUR_FCM_SERVER_KEY"; // Replace with your FCM server key
+  const serverKey =
+    "AAAAChQoeV4:APA91bE4jFNfAKnNLn2ckr08zDVRxY5iCoiI_ntp7Jo5Y-fQO6Rc9V2-5GvQml-E1coo_cwHT91MUo5aVclsTIxPuDU2O9JncES8NE0a9lznx5faHYAIXV0B_NL_TqissHSqjwvTFPOp"; // Replace with your FCM server key
 
   if (user) {
     const fields = {
