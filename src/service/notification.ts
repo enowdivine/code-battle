@@ -17,6 +17,8 @@ async function sendNotification(user: any, details: any) {
         image: details.image,
         category: details.category,
         type: "message",
+        longitude: details.longitude,
+        latitude: details.latitude,
       },
       to: user.FCM_TOKEN,
       apns: {

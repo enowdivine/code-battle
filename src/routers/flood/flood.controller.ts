@@ -1,9 +1,37 @@
 import { Request, Response } from "express";
 import Flood from "./flood.model";
+import User from "../user/user.model";
+import getDistanceFromLatLonInKm from "../../helpers/user.radius";
+import sendNotification from "../../service/notification";
 
 class FloodController {
   async addData(req: Request, res: Response) {
     try {
+      if (req.body.value < 1000) {
+        const users = await User.find();
+        const data = {
+          title: "EMERGENCY ALERT",
+          message: `FLOOD ALARM TRIGGERED AROUND BUEA`,
+          category: "CRITICAL",
+          status: "ACTIVE",
+          image: "",
+        };
+        // Find users within 3km radius
+        const usersWithin3km = users.filter((user) => {
+          const distance = getDistanceFromLatLonInKm(
+            4.1464771,
+            9.2611478,
+            user.latitude,
+            user.longitude
+          );
+          return distance <= 2; // Filter users within 2km radius
+        });
+        usersWithin3km.map((user) => sendNotification(user, data));
+        res.status(200).json({
+          status: 1,
+          message: "success",
+        });
+      }
       const newData = new Flood({
         data: req.body.value,
       });
