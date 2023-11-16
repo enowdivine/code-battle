@@ -77,6 +77,10 @@ class WarningController {
           .save()
           .then(() => {
             usersWithin3km.map((user) => sendNotification(user, data));
+            res.status(200).json({
+              status: 1,
+              message: "success",
+            });
           })
           .catch((err) => {
             res.status(400).json({
@@ -106,6 +110,10 @@ class WarningController {
           .save()
           .then(() => {
             usersWithin3km.map((user) => sendNotification(user, data));
+            res.status(200).json({
+              status: 1,
+              message: "success",
+            });
           })
           .catch((err) => {
             res.status(400).json({
@@ -135,6 +143,10 @@ class WarningController {
           .save()
           .then(() => {
             usersWithin3km.map((user) => sendNotification(user, data));
+            res.status(200).json({
+              status: 1,
+              message: "success",
+            });
           })
           .catch((err) => {
             res.status(400).json({
@@ -164,6 +176,10 @@ class WarningController {
           .save()
           .then(() => {
             usersWithin3km.map((user) => sendNotification(user, data));
+            res.status(200).json({
+              status: 1,
+              message: "success",
+            });
           })
           .catch((err) => {
             res.status(400).json({
@@ -172,10 +188,10 @@ class WarningController {
             });
           });
       }
-      if (ALERT === "OVERFLOW") {
+      if (ALERT === "ERUPTION") {
         const data = {
           title: "EMERGENCY ALERT",
-          message: `OVERFLOW ALARM TRIGGERED AROUND ${req.body.location}`,
+          message: `ERUPTION ALARM TRIGGERED AROUND ${req.body.location}`,
           category: "CRITICAL",
           status: "ACTIVE",
           image: "",
@@ -193,6 +209,10 @@ class WarningController {
           .save()
           .then(() => {
             usersWithin3km.map((user) => sendNotification(user, data));
+            res.status(200).json({
+              status: 1,
+              message: "success",
+            });
           })
           .catch((err) => {
             res.status(400).json({
