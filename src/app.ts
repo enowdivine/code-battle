@@ -4,8 +4,10 @@ import dbConnect from "./config/db";
 import dotenv from "dotenv";
 import http from "http";
 import cors from "cors";
-// api imports
+import axios from "axios";
 import userRoutes from "./routers/user/user.routes";
+import alarmRoutes from "./routers/warning/warning.routes";
+import floodRoutes from "./routers/flood/flood.routes";
 
 const corsOptions = {
   origin: "*",
@@ -31,7 +33,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(`/api/${process.env.API_VERSION}/user`, userRoutes);
-app.use(`/api/${process.env.API_VERSION}/alarm`, userRoutes);
+app.use(`/api/${process.env.API_VERSION}/alarm`, alarmRoutes);
+app.use(`/api/${process.env.API_VERSION}/flood`, floodRoutes);
 
 // let socketID: any;
 // io.on("connection", async (socket: any) => {
@@ -46,6 +49,27 @@ app.use(`/api/${process.env.API_VERSION}/alarm`, userRoutes);
 app.get("/", (req: Request, res: Response) => {
   res.send("Code Battle 🚀");
 });
+
+setInterval(async function () {
+  const response = await axios.get(
+    "https://api.openweathermap.org/data/2.5/weather?lat=7.3697&lon=12.3547&appid=9f9cd801aa64ebf74fa4e692feab6888"
+  );
+  if (response) {
+    const data = { value: response.data.main.sea_level };
+    console.log(data);
+    const res = axios.post(
+      "https://code-battle-4dabfab863b2.herokuapp.com/api/v1/flood/add-data",
+      data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("resrrrrrrrrrrrr", res);
+    return;
+  }
+}, 5000); // every 30 minutes
 
 const PORT: any = process.env.PORT || 5000;
 server.listen(PORT, () => {
