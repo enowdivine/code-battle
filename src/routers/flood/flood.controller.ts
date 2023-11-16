@@ -4,19 +4,18 @@ import Flood from "./flood.model";
 class FloodController {
   async addData(req: Request, res: Response) {
     try {
-      //   const newData = new Flood({
-      //     data: req.body.data,
-      //   });
-      //   newData
-      //     .save()
-      //     .then(() => {})
-      //     .catch((err) => {
-      //       res.status(400).json({
-      //         status: 0,
-      //         message: "error saving sea data",
-      //       });
-      //     });
-      console.log(req.body.value);
+      const newData = new Flood({
+        data: req.body.value,
+      });
+      newData
+        .save()
+        .then(() => {})
+        .catch((err) => {
+          res.status(400).json({
+            status: 0,
+            message: "error saving sea data",
+          });
+        });
     } catch (error) {
       console.error("error adding sea level data", error);
     }
