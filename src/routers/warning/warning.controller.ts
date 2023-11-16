@@ -42,6 +42,10 @@ class WarningController {
           .save()
           .then(() => {
             usersWithin3km.map((user) => sendNotification(user, data));
+            res.status(200).json({
+              status: 1,
+              message: "success",
+            });
           })
           .catch((err) => {
             res.status(400).json({
