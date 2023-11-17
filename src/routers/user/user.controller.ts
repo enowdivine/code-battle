@@ -9,6 +9,7 @@ class UserController {
       const user = await User.findOne({ phone: req.body.phone });
       if (user) {
         return res.status(409).json({
+          status: 0,
           message: "user already exist",
         });
       }
@@ -87,7 +88,10 @@ class UserController {
       }
     } catch (error) {
       console.error("user login error", error);
-      return res.status(500);
+      return res.status(500).json({
+        status: 0,
+        message: error,
+      });
     }
   }
 

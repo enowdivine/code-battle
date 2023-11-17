@@ -7,7 +7,7 @@ import sendNotification from "../../service/notification";
 class FloodController {
   async addData(req: Request, res: Response) {
     try {
-      if (req.body.value < 1000) {
+      if (req.body.value > 1300) {
         const users = await User.find();
         const data = {
           title: "EMERGENCY ALERT",
